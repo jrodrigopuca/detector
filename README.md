@@ -13,4 +13,5 @@ Detector de Personas en imagen/video
 - paralelo	    
 - tensor01 Estimación de Single-Person
 - tensor02 Estimación de Multi-Person 
+- QT: Programa con interfaz gráfica
 
