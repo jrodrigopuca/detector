@@ -66,7 +66,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.Bar.setValue(int(i*100/cantidad))
                 if (i%fps==0):
                     seg+=1
-                    frame=self.detectar(hog, frame,seg)
+                frame=self.detectar(hog, frame,seg)
                 nuevoVideo.write(frame)
                 success, frame= video.read()
             video.release()
