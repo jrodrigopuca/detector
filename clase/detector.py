@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import datetime
+import os
 
 
 class Detector:    
@@ -64,9 +65,51 @@ class Detector:
         nuevoVideo.release()
         video.release()
 
+    def metCSC(self,metodo, imagen, seg):
+        gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+        rects = metodo.detectMultiScale(gris)
 
+        for (x,y,w,h) in rects:
+            cv2.rectangle(imagen, (x, y), (x+w,y+h),(0,255,0),2)
+            self.eventos.append(f'[INFO] Segundo {seg}: Encontró algo!')
+        return imagen
 
+    def detectarCSC(self,salidaDir):
+        #TO DO: Refactoring
+        video = cv2.VideoCapture(self.entrada)
+        fps = video.get(cv2.CAP_PROP_FPS)
+        codec =cv2.VideoWriter_fourcc(*'XVID')
+        size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+        cantidad = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        self.eventos=[]
+        #tiempo = datetime.datetime.now()
+        i = 0     # num de frame
+        seg = 0   # segundos
+
+        cascada=cv2.CascadeClassifier(os.path.join('../body.xml'))
+
+        nuevoVideo = cv2.VideoWriter(salidaDir,codec,fps,size)
+
+        success, frame = video.read()
+        self.eventos.append(f'[INFO] Inicio')
+        while success:
+            i += 1
+            print(int(i*100/cantidad))  # mostrar avance
+            if (i % fps == 0):
+                seg += 1
+            if frame.size != 0:
+                frame = self.metCSC(cascada, frame, seg)
+                nuevoVideo.write(frame)
+            success, frame = video.read()
+        self.eventos.append(f'[INFO] Fin')
+        nuevoVideo.release()
+        video.release()
 
     def detectar(self, metodo, salida):
+        # Aplicar nuevos métodos
         if metodo == 0:
             self.detectarHOG(salida)
+        else:
+            self.detectarCSC(salida)

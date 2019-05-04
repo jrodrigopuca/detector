@@ -4,7 +4,7 @@ Detector de Personas en imagen/video
 - 00 Detectar en imagen
 - 01 [HOG] Detectar en video (todos los frames)
 - 02 [HOG] Detectar en video (50% de frames, frames a la mitad)
-- 03 Traer video de YT
+- 03 Traer video de YT (ahora no funciona)
 - 04 [HOG] Detectar en video (a 1FPS)
 - 05 [Csc] Detectar en video (todos los frames)
 - 06 [Csc] Detectar en video (50% de frames)
@@ -13,5 +13,7 @@ Detector de Personas en imagen/video
 - paralelo	    
 - tensor01 Estimación de Single-Person
 - tensor02 Estimación de Multi-Person 
-- QT: Programa con interfaz gráfica
+- /QT: Programa con interfaz gráfica
+- /clase: algoritmos dentro de una clase
+- /yolo: uso de YOLOv3 (no se incluye yolov3.weights por el tamaño del archivo)
 
